@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .text-shadow {
+    text-shadow: #c0c0c0 1px 0 10px;
+  }
+
+  .text-shadow-md {
+    text-shadow: 0 4px 8px rgb(255, 255, 255, 0.12),
+      0 2px 4px rgb(255, 255, 255, 0.08);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 15px 30px rgb(255, 255, 255, 0.11),
+      0 5px 15px rgb(255, 255, 255, 0.08);
+  }
+
+  .text-shadow-none {
+    text-shadow: none;
+  }
+}
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;

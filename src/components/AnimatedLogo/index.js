@@ -4,15 +4,15 @@ import a_logo from "../../../public/a_logo_white.png";
 import kram_logo from "public/kram_logo.png";
 
 export default function AnimatedLogo() {
-  const [isHovering, setIsHovering] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <div className="fixed top-0 left-0">
+    <div className="fixed top-6 left-6">
       <div className="flex flex-row items-end">
         <Image
           src={a_logo}
           alt="First Image"
-          className="h-16 w-8 mt-1 ml-1 relative flex"
+          className="h-16 w-8 relative flex"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           onClick={() => setIsHovering(true)}

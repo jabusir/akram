@@ -2,11 +2,10 @@ import Head from "next/head";
 import HeroSection from "@/components/HeroSection";
 import SecondHomeSection from "@/components/SecondHomeSection";
 import Navbar from "@/components/Navbar";
-import { getAllProducts } from "@/util/api";
-
+import { getAllCollections } from "@/util/api";
 
 export default function Home(props) {
-
+  console.log(props);
   return (
     <>
       <Head>
@@ -17,7 +16,6 @@ export default function Home(props) {
       </Head>
       <main className="text-white">
         <div>
-          {/* <AnimatedLogo /> */}
           <Navbar />
         </div>
         <div className="flex justify-center items-center h-screen">
@@ -32,6 +30,13 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  const products = await getAllProducts()
-  return { props: { products: products.body.data.products.edges.map(({ node }) => node) } }
+  const collections = await getAllCollections();
+  return {
+    props: {
+      collections: collections.body.data.collections.edges.map(({ node }) => {
+        node.products = node.products.edges.map(({ node }) => node);
+        return node;
+      }),
+    },
+  };
 }

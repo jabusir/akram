@@ -23,6 +23,34 @@ export async function shopifyFetch({ query, variables }) {
   }
 }
 
+export async function getAllCollections() {
+  return shopifyFetch({
+    query: `
+      query {
+        collections(first: 10) {
+          edges {
+            node {
+              id
+              title
+              description
+              products(first: 10) {
+                edges {
+                  node {
+                    id
+                    title
+                    description
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+  });
+}
+
+
 export async function getAllProducts() {
   return shopifyFetch({
     query: `{
@@ -32,6 +60,7 @@ export async function getAllProducts() {
               id
               title
               description
+
             }
           }
         }

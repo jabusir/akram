@@ -1,14 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import AnimatedLogo from "@/components/AnimatedLogo";
 import HeroSection from "@/components/HeroSection";
 import SecondHomeSection from "@/components/SecondHomeSection";
+import Navbar from "@/components/Navbar";
+import { getAllProducts } from "@/util/api";
 
-const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home(props) {
+
   return (
     <>
       <Head>
@@ -19,7 +17,8 @@ export default function Home() {
       </Head>
       <main className="text-white">
         <div>
-          <AnimatedLogo />
+          {/* <AnimatedLogo /> */}
+          <Navbar />
         </div>
         <div className="flex justify-center items-center h-screen">
           <HeroSection />
@@ -30,4 +29,9 @@ export default function Home() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const products = await getAllProducts()
+  return { props: { products: products.body.data.products.edges.map(({ node }) => node) } }
 }

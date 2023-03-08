@@ -1,3 +1,7 @@
+import Image from "next/image";
+import GlowingText from "../GlowingText";
+import braceletPic from "public/bracelet.png";
+import Link from "next/link";
 import {useRef} from 'react';
 
 

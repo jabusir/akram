@@ -3,22 +3,22 @@ export async function shopifyFetch({ query, variables }) {
   const key = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   try {
     const result = await fetch(endpoint, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': key
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": key,
       },
-      body: { query, variables } && JSON.stringify({ query, variables })
+      body: { query, variables } && JSON.stringify({ query, variables }),
     });
     return {
       status: result.status,
-      body: await result.json()
+      body: await result.json(),
     };
   } catch (error) {
     // console.error('Error:', error);
     return {
       status: 500,
-      error: 'Error receiving data'
+      error: "Error receiving data",
     };
   }
 }
@@ -26,19 +26,31 @@ export async function shopifyFetch({ query, variables }) {
 export async function getAllCollections() {
   return shopifyFetch({
     query: `
-      query {
-        collections(first: 10) {
-          edges {
-            node {
-              id
-              title
-              description
-              products(first: 10) {
-                edges {
-                  node {
-                    id
-                    title
-                    description
+    query {
+      collections(first: 10) {
+        edges {
+          node {
+            id
+            title
+            description
+            products(first: 10) {
+              edges {
+                node {
+                  id
+                  title
+                  description
+                  tags
+                  media(first: 5) {
+                    edges {
+                      node {
+                        ... on ExternalVideo {
+                          id
+                        }
+                        ... on MediaImage {
+                          id
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -46,10 +58,10 @@ export async function getAllCollections() {
           }
         }
       }
-    `
+    }
+    `,
   });
 }
-
 
 export async function getAllProducts() {
   return shopifyFetch({
@@ -60,10 +72,9 @@ export async function getAllProducts() {
               id
               title
               description
-
             }
           }
         }
-      }`
+      }`,
   });
 }

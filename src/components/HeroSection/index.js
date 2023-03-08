@@ -25,7 +25,7 @@ export default function HeroSection() {
         muted
         ref={videoEl}
         onClick={handleClick}
-        src={require("./arabian_spices.mp4")}
+        src={require("./ring.mp4")}
       />
     </>
   );

@@ -1,17 +1,17 @@
 import { useEffect, useContext } from "react";
-import ProductContext from "@/util/ProductContext";
 import Head from "next/head";
 import HeroSection from "@/components/HeroSection";
 import SecondHomeSection from "@/components/SecondHomeSection";
 import Navbar from "@/components/Navbar";
 import { getAllCollections } from "@/util/api";
+import CollectionContext from "@/util/CollectionContext";
 
-export default function Home({ products }) {
-  const { setProducts } = useContext(ProductContext);
+export default function Home({ collections }) {
+  const { setCollections } = useContext(CollectionContext);
 
   useEffect(() => {
-    setProducts(products);
-  }, [products, setProducts]);
+    setCollections(collections);
+  }, [collections, setCollections]);
 
   return (
     <>
@@ -23,7 +23,7 @@ export default function Home({ products }) {
       </Head>
       <main className="text-white">
         <div>
-          <Navbar products={products} />
+          <Navbar />
         </div>
         <div className="flex justify-center items-center h-screen">
           <HeroSection />
@@ -37,13 +37,18 @@ export default function Home({ products }) {
 }
 
 export async function getServerSideProps() {
-  const collections = await getAllCollections();
-  return {
-    props: {
-      products: collections.body.data.collections.edges.map(({ node }) => {
-        node.products = node.products.edges.map(({ node }) => node);
-        return node;
-      }),
-    },
-  };
+  try {
+    const collections = await getAllCollections();
+    return {
+      props: {
+        collections: collections.body.data.collections.edges.map(({ node }) => {
+          node.products = node.products.edges.map(({ node }) => node);
+          return node;
+        }),
+      },
+    };
+  } catch (e) {
+    console.error(e);
+    return;
+  }
 }

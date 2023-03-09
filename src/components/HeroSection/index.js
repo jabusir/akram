@@ -1,10 +1,4 @@
 import { useRef } from "react";
-import Image from "next/image";
-import GlowingText from "../GlowingText";
-import braceletPic from "public/bracelet.png";
-import Link from "next/link";
-import {useRef} from 'react';
-
 
 export default function HeroSection() {
   const videoEl = useRef(null);
